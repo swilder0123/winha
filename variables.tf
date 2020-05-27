@@ -39,9 +39,9 @@ variable "ad_domain_short_name" {
   description = "Active Directory single-label domain name"
 }
 
-variable "ad_domain_dn" {
-  description = "Active Directory LDAP-style"
-}
+# variable "ad_domain_dn" {
+#   description = "Active Directory LDAP-style"
+# }
 
 variable "ad_server_ou_path" {
   description = "Active Directory OU/container for server machine accounts."

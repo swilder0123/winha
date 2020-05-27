@@ -1,0 +1,18 @@
+deployment_location      = "<azure location: e.g., westus"
+deployment_prefix        = "prefix for deployment(5-8 characters recommended): e.g., winha"
+node_count               = 3
+ad_domain_name           = "dns name for your AD domain: e.g, contosopower.net"
+ad_domain_dn             = "dc=contosopower,dc=net"
+ad_server_ou_path        = "distinguished name for your deployment OU *must already exist*: e.g., OU=Servers,OU=HQ,DC=contosopower,DC=net"
+ad_domain_short_name     = "single-label domain name: e.g., contosopower"
+ad_domain_key_vault_name = "name of your keyvault *must already exist*: cpw-hubkv-01"
+ad_domain_key_vault_rg   = "name of the keyvault resource group: e.g., cpw-westhub-rg"
+ad_dns_host_address      = "x.x.x.x"
+vnet_address_space       = address space for the cluster vnet..one is sufficient, but two are supported: e.g., ["x.x.x.x/xx", "x.x.x.x/xx"]
+vnet_dns_servers         = dns server(s) for the cluster vnet: e.g., ["x.x.x.x"]
+vnet_peer_name           = "vnet you need to peer with the reach the domain: e.g., cpw-westhub-vnet"
+vnet_peer_rg             = "above vnet's rg: e.g, cpw-westhub-rg"
+public_subnet_prefix     = "x.x.x.x/x"
+private_subnet_prefix    = "private cluster subnet which only the nodes use: e.g, 192.168.20.0/24 <-must be within your vnet address space"
+environment_tag          = "any tag: e.g., Production"
+my_client_ip             = "x.x.x.x"

@@ -32,7 +32,7 @@ resource "azurerm_key_vault" "kv" {
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
   tenant_id                       = data.azurerm_client_config.current.tenant_id
-  soft_delete_enabled             = true
+  soft_delete_enabled             = false
   purge_protection_enabled        = false
 
   sku_name = "standard"

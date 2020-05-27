@@ -39,9 +39,9 @@ variable "ad_domain_short_name" {
   description = "Active Directory single-label domain name"
 }
 
-# variable "ad_domain_dn" {
-#   description = "Active Directory LDAP-style"
-# }
+variable "ad_domain_dn" {
+  description = "Active Directory LDAP-style"
+}
 
 variable "ad_server_ou_path" {
   description = "Active Directory OU/container for server machine accounts."
@@ -170,9 +170,18 @@ variable "extension_custom_script" {
   default     = false
 }
 
-variable "extensions_custom_script_fileuris" {
+variable "extension_custom_script_fileuri" {
+  description = "Location for the configuration scripts needed for the cluster"
+  default = "https://raw.githubusercontent.com/swilder0123/winha/master/config"
+}
+
+variable "extensions_custom_script_names" {
   description = "File URIs to be consumed by the custom script extension (optional)"
-  default     = [""]
+  type = map
+  default     = {
+    "nodesetup"   =  "nodesetup.ps1"
+    "jbsetup"     =  "jbsetup.ps1"
+  }
 }
 
 variable "extensions_custom_command" {

@@ -1,0 +1,7 @@
+deployment_location     = "<azure_region>"
+deployment_prefix       = "<deployment_prefix"  # (~5-8 characters)
+ad_domain_name          = "myaddomain.net"
+ad_domain_dn            = "dc=myaddomain,dc=net"
+ad_server_ou_path       = "ou=Servers"
+ad_domain_short_name    = "myaddomain"
+environment_tag         = "Production"

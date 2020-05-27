@@ -44,7 +44,12 @@ resource "azurerm_subnet" "public" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefix       = var.public_subnet_prefix
+  
+}
 
+resource "azurerm_subnet_network_security_group_association" nsg_assoc {
+    subnet_id                  = azurerm_subnet.public.id
+    network_security_group_id  = azurerm_network_security_group.public_nsg.id
 }
 
 resource "azurerm_virtual_network_peering" "outbound" {

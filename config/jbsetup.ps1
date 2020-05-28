@@ -1,2 +1,2 @@
 # on the cluster nodes, install the full cluster feature
-Enable-WindowsOptionalFeature -FeatureName FailoverCluster-AdminPak
+Enable-WindowsOptionalFeature -Online -FeatureName FailoverCluster-AdminPak

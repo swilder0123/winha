@@ -19,31 +19,6 @@ resource "azurerm_network_interface" "nic_jb" {
   }
 }
 
-resource "azurerm_network_security_group" "jumpbox_rdp" {
-    name                = "${var.deployment_prefix}-nsg-jumpbox"
-    location            = azurerm_resource_group.rg.location
-    resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_network_security_rule" "jumpbox_rdp_rule" {
-  name                        = "RDP_access"
-  priority                    = 201
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "3389"
-  source_address_prefix       = var.my_client_ip
-  destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.jumpbox_rdp.name
-}
-
-resource "azurerm_network_interface_security_group_association" "jumpbox_nsg_assoc" {
-    network_interface_id       = azurerm_network_interface.nic_jb.id
-    network_security_group_id  = azurerm_network_security_group.jumpbox_rdp.id
-}
-
 resource "azurerm_windows_virtual_machine" "jumpbox" {
   name                      = "${var.deployment_prefix}-jumpbox"
   resource_group_name       = azurerm_resource_group.rg.name

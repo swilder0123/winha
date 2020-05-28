@@ -22,7 +22,7 @@ variable "node_count" {
 
 variable "node_size" {
   description  = "Size of the machine to deploy for cluster nodes (default: 'Standard_DS2_v2')"
-  default      = "Standard_DS2_v2"
+  default      = "Standard_B2ms"
 }
 
 variable "local_admin_user" {
@@ -196,6 +196,11 @@ variable "os_disk_class" {
 variable "os_disk_size" {
   description = "The size of the OS disk (default: 128GB)"
   default     = 128
+}
+
+variable "data_disk_size" {
+  description = "The size of the data disk (default: 30GB)"
+  default     = 30
 }
 
 variable "managed_disk_sizes" {

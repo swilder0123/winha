@@ -18,6 +18,25 @@ resource "azurerm_network_security_rule" "public_nsg_rule" {
   network_security_group_name = azurerm_network_security_group.public_nsg.name
 }
 
+resource "azurerm_network_security_rule" "jumpbox_rdp_rule" {
+  name                        = "RDP_access"
+  priority                    = 201
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefix       = var.my_client_ip
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.public_nsg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" nsg_assoc {
+    subnet_id                  = azurerm_subnet.public.id
+    network_security_group_id  = azurerm_network_security_group.public_nsg.id
+}
+
 data "azurerm_virtual_network" "peer" {
     name                = var.vnet_peer_name
     resource_group_name = var.vnet_peer_rg
@@ -45,11 +64,6 @@ resource "azurerm_subnet" "public" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefix       = var.public_subnet_prefix
   
-}
-
-resource "azurerm_subnet_network_security_group_association" nsg_assoc {
-    subnet_id                  = azurerm_subnet.public.id
-    network_security_group_id  = azurerm_network_security_group.public_nsg.id
 }
 
 resource "azurerm_virtual_network_peering" "outbound" {

@@ -24,6 +24,35 @@ resource "azurerm_network_interface" "nic_public" {
   }
 }
 
+# Create one datadisk per node
+resource "azurerm_managed_disk" "datadisk" {
+  count                = var.node_count
+  name                 = "${var.deployment_prefix}-disk-${count.index}"
+  location             = azurerm_resource_group.rg.location
+  resource_group_name  = azurerm_resource_group.rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = var.data_disk_size
+
+  tags = {
+    environment = var.environment_tag
+  }
+}
+
+resource "azurerm_managed_disk" "datadisk_a" {
+  count                = var.node_count
+  name                 = "${var.deployment_prefix}-disk-${count.index}a"
+  location             = azurerm_resource_group.rg.location
+  resource_group_name  = azurerm_resource_group.rg.name
+  storage_account_type = "StandardSSD_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = var.data_disk_size
+
+  tags = {
+    environment = var.environment_tag
+  }
+}
+
 resource "azurerm_windows_virtual_machine" "node" {
   count                     = var.node_count
   name                      = "${var.deployment_prefix}-node-${count.index}"
@@ -55,3 +84,19 @@ resource "azurerm_windows_virtual_machine" "node" {
   }
 }
 
+# Attach one datadisk per node
+resource "azurerm_virtual_machine_data_disk_attachment" "diskattach" {
+  count              = var.node_count
+  managed_disk_id    = azurerm_managed_disk.datadisk["${count.index}"].id
+  virtual_machine_id = azurerm_windows_virtual_machine.node["${count.index}"].id
+  lun                = "10"
+  caching            = "ReadWrite"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "diskattach_a" {
+  count              = var.node_count
+  managed_disk_id    = azurerm_managed_disk.datadisk_a["${count.index}"].id
+  virtual_machine_id = azurerm_windows_virtual_machine.node["${count.index}"].id
+  lun                = "0"
+  caching            = "ReadWrite"
+}
